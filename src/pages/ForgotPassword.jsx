@@ -1,45 +1,43 @@
 import React from "react";
-import styles from "../styles/Register.module.css";
+import styles from "../styles/ForgotPassword.module.css";
 import { useForm } from "react-hook-form";
-import RegisterSchema from "../schema/RegisterSchema";
-import registerApi from "../api/RegisterAPI";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import ForgotSchema from "../schema/ForgotSchema";
+import { useState } from "react";
+import ForgotPasswordApi from "../api/ForgotPasswordApi";
 
-function RegistrationForm() {
+function ForgotPassword() {
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleConfirmPasswordChange = (event) => {
+    setConfirmPassword(event.target.value);
+  };
+
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(RegisterSchema) });
+  } = useForm({ resolver: yupResolver(ForgotSchema) });
 
   const onSubmit = async (data) => {
-    const result = await registerApi(data);
-    if (result == true) {
-      alert("Registration Successful.");
-      navigate("/LoginPage");
-    } else if (result == 0) {
-      alert("E-mail already exist");
-    } else {
-      alert("Registeration failed");
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
     }
+    const result = await ForgotPasswordApi(data);
+
+    alert("Password reset successful");
+    navigate("/LoginPage");
   };
 
-  const Name = {
-    hidden: {
-      x: -10,
-      opacity: 0,
-    },
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        delay: 0.5,
-      },
-    },
-  };
   const Email = {
     hidden: {
       x: -10,
@@ -66,26 +64,10 @@ function RegistrationForm() {
       },
     },
   };
-  const Confirm = {
-    hidden: {
-      x: -10,
-      opacity: 0,
-    },
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        delay: 0.8,
-      },
-    },
-  };
-  const myLogin = () => {
-    navigate("/LoginPage");
-  };
 
   return (
     <div className={styles.body}>
-      <div className={styles.register}>Registeration</div>
+      <div className={styles.register}>Reset Password</div>
       <motion.form
         onSubmit={handleSubmit(onSubmit)}
         className={styles.form}
@@ -98,27 +80,6 @@ function RegistrationForm() {
           scale: 1.1,
         }}
       >
-        <div>
-          <motion.label
-            className={styles.label}
-            animate="visible"
-            variants={Name}
-            initial="hidden"
-          >
-            Name
-          </motion.label>
-          <motion.input
-            className={styles.input}
-            animate="visible"
-            variants={Name}
-            initial="hidden"
-            {...register("name")}
-            placeholder="Name"
-          />
-          {errors.name && (
-            <p className={styles.message}>{errors.name.message}</p>
-          )}
-        </div>
         <div>
           <motion.label
             className={styles.label}
@@ -147,7 +108,7 @@ function RegistrationForm() {
             variants={Password}
             initial="hidden"
           >
-            Password
+            New Password
           </motion.label>
           <motion.input
             className={styles.input}
@@ -156,7 +117,8 @@ function RegistrationForm() {
             initial="hidden"
             type="password"
             {...register("password")}
-            placeholder="Password"
+            placeholder="Enter a new password"
+            onChange={handlePasswordChange}
           />
           {errors.password && (
             <p className={styles.message}>{errors.password.message}</p>
@@ -166,7 +128,7 @@ function RegistrationForm() {
           <motion.label
             className={styles.label}
             animate="visible"
-            variants={Confirm}
+            variants={Password}
             initial="hidden"
           >
             Confirm Password
@@ -174,28 +136,24 @@ function RegistrationForm() {
           <motion.input
             className={styles.input}
             animate="visible"
-            variants={Confirm}
+            variants={Password}
             initial="hidden"
             type="password"
-            {...register("confirmPassword")}
-            placeholder="Confirm"
+            {...register("confirm")}
+            placeholder="Same as above"
+            onChange={handleConfirmPasswordChange}
           />
-          {errors.confirmPassword && (
-            <p className={styles.message}>{errors.confirmPassword.message}</p>
+          {errors.password && (
+            <p className={styles.message}>{errors.password.message}</p>
           )}
         </div>
+
         <button className={styles.button} type="submit">
-          Submit
+          Reset
         </button>
       </motion.form>
-      <div className={styles.anchor}>
-        <span>Already have an account</span> &nbsp;
-        <span className={styles.login} onClick={myLogin}>
-          Login
-        </span>
-      </div>
     </div>
   );
 }
 
-export default RegistrationForm;
+export default ForgotPassword;

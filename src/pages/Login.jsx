@@ -1,12 +1,9 @@
 import React from "react";
-import styles from "./Login.module.css";
+import styles from "../styles/Login.module.css";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import LoginSchema from "./LoginSchema.jsx";
-import loginApi from "./LoginApi";
+import LoginSchema from "../schema/LoginSchema";
+import loginApi from "../api/LoginAPI";
 import { yupResolver } from "@hookform/resolvers/yup";
-import MainHeader from "../components/header/MainHeader";
-import MainFooter from "../components/footer/MainFooter";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
@@ -68,6 +65,13 @@ function RegistrationForm() {
         delay: 0.7,
       },
     },
+  };
+  const myRegister = () => {
+    navigate("/");
+  };
+
+  const myForgot = () => {
+    navigate("/ForgotPassword");
   };
 
   return (
@@ -132,7 +136,16 @@ function RegistrationForm() {
         <button className={styles.button} type="submit">
           Submit
         </button>
+        <text className={styles.forgot} onClick={myForgot}>
+          Forgot password
+        </text>
       </motion.form>
+      <div className={styles.anchor}>
+        <text>Don't have an account yet</text> &nbsp;
+        <text className={styles.login} onClick={myRegister}>
+          Register
+        </text>
+      </div>
     </div>
   );
 }

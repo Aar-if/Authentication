@@ -1,4 +1,5 @@
 import axios from "axios";
+import { loginURL } from "../routes/links";
 
 const loginApi = async (data) => {
   console.log("Before AXIOS ");
@@ -6,7 +7,7 @@ const loginApi = async (data) => {
   let result = false;
   await axios({
     method: "POST",
-    url: "http://localhost:3000/login",
+    url: loginURL,
     data: data,
   })
     .then((res) => {

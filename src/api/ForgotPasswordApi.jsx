@@ -1,16 +1,17 @@
 import axios from "axios";
+import { forgotURL } from "../routes/links";
 
-const registerApi = async (data) => {
+const ForgotPasswordApi = async (data) => {
   console.log("Before AXIOS ");
   console.log(data);
   let result = false;
   await axios({
     method: "POST",
-    url: "http://localhost:3000/register",
+    url: forgotURL,
     data: data,
   })
     .then((res) => {
-      console.log(res);
+      console.log("HELLO");
       console.log(res.data);
 
       if (res.status === 200) {
@@ -28,4 +29,4 @@ const registerApi = async (data) => {
   return result;
 };
 
-export default registerApi;
+export default ForgotPasswordApi;

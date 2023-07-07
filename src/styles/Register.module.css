@@ -1,0 +1,58 @@
+.body {
+  height: 100%;
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  width: 150px;
+  margin-top: 2%;
+  background-color: rgb(29, 4, 53);
+  border-radius: 5px;
+  background: linear-gradient(to right, rgb(49, 6, 67), rgb(186, 122, 198));
+  /* background: linear-gradient(to right, rgb(67, 124, 205), rgb(69, 214, 202)); */
+}
+
+.register {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.label {
+  font-family: "Times New Roman", Times, serif;
+  color: white;
+}
+
+.input {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.button {
+  align-items: center;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  cursor: pointer;
+  margin-top: 15px;
+  width: 80px;
+}
+.message {
+  font-style: italic;
+  color: rgb(255, 0, 0);
+}
+
+.anchor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.login {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
